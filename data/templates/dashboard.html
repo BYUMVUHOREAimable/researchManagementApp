@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+    <div class="container mx-auto py-10">
+        <!-- Dashboard Header -->
+        <h1 class="text-3xl font-bold mb-5 text-center">Research Dashboard</h1>
+
+        <!-- Cards Section -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+            <!-- Total Participants Card -->
+            <div class="bg-white shadow-md rounded-lg p-5">
+                <h2 class="text-xl font-semibold">Total Participants</h2>
+                <p class="text-4xl font-bold text-blue-600 mt-3">{{ total_participants }}</p>
+            </div>
+
+            <!-- Total Data Collected Card -->
+            <div class="bg-white shadow-md rounded-lg p-5">
+                <h2 class="text-xl font-semibold">Total Data Collected</h2>
+                <p class="text-4xl font-bold text-green-600 mt-3">{{ total_data_collected }}</p>
+            </div>
+
+            <!-- Average Data Per Participant Card -->
+            <div class="bg-white shadow-md rounded-lg p-5">
+                <h2 class="text-xl font-semibold">Avg Data Per Participant</h2>
+                <p class="text-4xl font-bold text-purple-600 mt-3">{{ avg_data_collected_per_participant|floatformat:2 }}</p>
+            </div>
+        </div>
+
+        <!-- Graphs Section -->
+        <div class="bg-white shadow-md rounded-lg p-5 mb-10">
+            <h2 class="text-2xl font-semibold mb-3">Participants Over Time</h2>
+            <canvas id="participantsChart" class="w-full"></canvas>
+        </div>
+
+        <div class="bg-white shadow-md rounded-lg p-5 mb-10">
+            <h2 class="text-2xl font-semibold mb-3">Data Collection Over Time</h2>
+            <canvas id="dataCollectionChart" class="w-full"></canvas>
+        </div>
+
+        <div class="bg-white shadow-md rounded-lg p-5 mb-10">
+            <h2 class="text-2xl font-semibold mb-3">Data Size Over Time</h2>
+            <canvas id="dataSizeChart" class="w-full"></canvas>
+        </div>
+    </div>
+
+    
+    <script>
+        const participantsChartCtx = document.getElementById('participantsChart').getContext('2d');
+        const participantsChartData = {{ participants_chart_data|safe }};
+        new Chart(participantsChartCtx, {
+            type: 'line',
+            data: {
+                labels: participantsChartData.labels,
+                datasets: [{
+                    label: 'Participants Over Time',
+                    data: participantsChartData.data,
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                    borderWidth: 2,
+                }],
+            },
+            // options: {
+            //     responsive: true,
+            //     maintainAspectRatio: false,
+            // },
+        });
+
+        // Data Collection Over Time Chart
+        const dataCollectionChartCtx = document.getElementById('dataCollectionChart').getContext('2d');
+        const dataCollectionChartData = {{ data_collection_chart_data|safe }};
+        new Chart(dataCollectionChartCtx, {
+            type: 'line',
+            data: {
+                labels: dataCollectionChartData.labels,
+                datasets: [{
+                    label: 'Data Collected Over Time',
+                    data: dataCollectionChartData.data,
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderWidth: 2,
+                }],
+            },
+            // options: {
+            //     responsive: true,
+            //     maintainAspectRatio: false,
+            // },
+        });
+
+        // Data Size Over Time Chart
+        const dataSizeChartCtx = document.getElementById('dataSizeChart').getContext('2d');
+        const dataSizeChartData = {{ data_size_chart_data|safe }};
+        new Chart(dataSizeChartCtx, {
+            type: 'line',
+            data: {
+                labels: dataSizeChartData.labels,
+                datasets: [{
+                    label: 'Data Size (KB) Over Time',
+                    data: dataSizeChartData.data,
+                    borderColor: 'rgba(255, 99, 132, 1)',
+                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                    borderWidth: 2,
+                }],
+            },
+            // options: {
+            //     responsive: true,
+            //     maintainAspectRatio: false,
+            // },
+        });
+    </script>
+</body>
+</html>

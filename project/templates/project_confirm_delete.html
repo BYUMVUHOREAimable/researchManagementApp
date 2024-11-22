@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <title>Confirm Delete</title>
+</head>
+<body class="bg-gray-100 p-6">
+    <div class="container mx-auto">
+        <h1 class="text-3xl font-bold mb-4">Confirm Delete</h1>
+        <p>Are you sure you want to delete the project "{{ project.title }}"?</p>
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded">Confirm</button>
+            <a href="{% url 'project_list' %}" class="bg-blue-500 text-white px-4 py-2 rounded">Cancel</a>
+        </form>
+    </div>
+</body>
+</html>

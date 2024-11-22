@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <title>Participant Form</title>
+</head>
+<body class="bg-gray-100 p-6">
+    <div class="container mx-auto">
+        <h1 class="text-3xl font-bold mb-4">Participant Form</h1>
+        <form method="post" class="bg-white p-6 rounded shadow-md">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded">Save</button>
+        </form>
+        <a href="{% url 'participant_list' request.resolver_match.kwargs.pk_project %}" class="bg-blue-500 text-white px-4 py-2 rounded mt-4 inline-block">Back to List</a>
+    </div>
+</body>
+</html>

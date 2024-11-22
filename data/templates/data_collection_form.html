@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% if form.instance.id %}Edit{% else %}Add{% endif %} Data Collection</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 text-gray-800">
+    <div class="container mx-auto py-4">
+        <h1 class="text-2xl font-bold mb-4">{% if form.instance.id %}Edit{% else %}Add{% endif %} Data Collection</h1>
+        <form method="post" enctype="multipart/form-data" class="space-y-4">
+            {% csrf_token %}
+            <div class="space-y-2">
+                {{ form.as_p }}
+            </div>
+            <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700">
+                Save
+            </button>
+        </form>
+    </div>
+</body>
+</html>

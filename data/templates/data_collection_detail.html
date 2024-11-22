@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Collection Details</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 text-gray-800">
+    <div class="container mx-auto py-4">
+        <h1 class="text-2xl font-bold mb-4">Data Collection Details</h1>
+
+        <p><strong>Project:</strong> {{ data_collection.project.title }}</p>
+        <p><strong>Participant:</strong> {{ data_collection.participant.user.username }}</p>
+        <p><strong>Submitted on:</strong> {{ data_collection.data_submission_date }}</p>
+        <p><strong>File:</strong> <a href="{{ data_collection.data.url }}" target="_blank" class="text-blue-500 hover:text-blue-700">{{ data_collection.data.name }}</a></p>
+
+        <!-- Edit Data Collection link -->
+        <a href="{% url 'data_collection_update' data_collection.project.id data_collection.id %}" class="inline-block mt-4 px-4 py-2 bg-yellow-500 text-white rounded hover:bg-yellow-700">
+            Edit
+        </a>
+
+        <!-- Delete Data Collection form -->
+        <form method="post" action="{% url 'data_collection_delete' data_collection.project.id data_collection.id %}" class="inline-block mt-4">
+            {% csrf_token %}
+            <button type="submit" class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-700">
+                Delete
+            </button>
+        </form>
+    </div>
+</body>
+</html>

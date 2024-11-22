@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <title>Project Detail</title>
+</head>
+<body class="bg-gray-100 p-6">
+    <div class="container mx-auto">
+        <h1 class="text-3xl font-bold mb-4">{{ project.title }}</h1>
+        <p><strong>Description:</strong> {{ project.description }}</p>
+        <p><strong>Status:</strong> {{ project.status }}</p>
+        <p><strong>Start Date:</strong> {{ project.start_date }}</p>
+        <p><strong>End Date:</strong> {{ project.end_date }}</p>
+        <p><strong>Created By:</strong> {{ project.created_by }}</p>
+        <p><strong>Participants:</strong> {{ project.participants.all|join:", " }}</p>
+        <a href="{% url 'project_list' %}" class="bg-blue-500 text-white px-4 py-2 rounded">Back to List</a>
+    </div>
+</body>
+</html>

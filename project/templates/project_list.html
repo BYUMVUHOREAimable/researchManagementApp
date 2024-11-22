@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <title>Project List</title>
+</head>
+<body class="bg-gray-100 p-6">
+    <div class="container mx-auto">
+        <h1 class="text-3xl font-bold mb-4">Research Projects</h1>
+        <a href="{% url 'project_create' %}" class="bg-blue-500 text-white px-4 py-2 rounded">Add Project</a>
+        <table class="min-w-full mt-4 bg-white rounded-lg shadow overflow-hidden">
+            <thead>
+                <tr class="bg-gray-200">
+                    <th class="px-4 py-2 text-left">Title</th>
+                    <th class="px-4 py-2 text-left">Status</th>
+                    <th class="px-4 py-2 text-left">Start Date</th>
+                    <th class="px-4 py-2 text-left">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for project in projects %}
+                    <tr class="border-b">
+                        <td class="px-4 py-2">{{ project.title }}</td>
+                        <td class="px-4 py-2">{{ project.status }}</td>
+                        <td class="px-4 py-2">{{ project.start_date }}</td>
+                        <td class="px-4 py-2">
+                            <a href="{% url 'project_detail' project.pk %}" class="text-blue-500">View</a> |
+                            <a href="{% url 'project_update' project.pk %}" class="text-yellow-500">Edit</a> |
+                            <a href="{% url 'project_delete' project.pk %}" class="text-red-500">Delete</a> |
+                            <a href="{% url 'participant_list' project.pk %}" class="text-purple-500">Participants</a> |
+                            <a href="{% url 'data_collection_list' project.pk %}" class="text-yellow-500">Data</a> |
+                            <a href="{% url 'analytics' project.pk %}" class="text-green-500">Analytics</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

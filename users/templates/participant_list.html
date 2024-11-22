@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <title>Participants List</title>
+</head>
+<body class="bg-gray-100 p-6">
+    <div class="container mx-auto">
+        <h1 class="text-3xl font-bold mb-4">Participants</h1>
+        <a href="{% url 'project_detail' request.resolver_match.kwargs.pk_project %}" class="bg-blue-500 text-white px-4 py-2 rounded">back to project</a>
+        <a href="{% url 'participant_create' request.resolver_match.kwargs.pk_project %}" class="bg-blue-500 text-white px-4 py-2 rounded">Add Participant</a>
+        <table class="min-w-full mt-4 bg-white rounded-lg shadow overflow-hidden">
+            <thead>
+                <tr class="bg-gray-200">
+                    <th class="px-4 py-2 text-left">User</th>
+                    <th class="px-4 py-2 text-left">Status</th>
+                    <th class="px-4 py-2 text-left">Project</th>
+                    <th class="px-4 py-2 text-left">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for participant in participants %}
+                    <tr class="border-b">
+                        <td class="px-4 py-2">{{ participant.user }}</td>
+                        <td class="px-4 py-2">{{ participant.status }}</td>
+                        <td class="px-4 py-2">{{ participant.project }}</td>
+                        <td class="px-4 py-2">
+                            <a href="{% url 'participant_detail' participant.project.id participant.pk %}" class="text-blue-500">View</a> |
+                            <a href="{% url 'participant_update' participant.project.id participant.pk %}" class="text-yellow-500">Edit</a> |
+                            <a href="{% url 'participant_delete' participant.project.id participant.pk %}" class="text-red-500">Delete</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

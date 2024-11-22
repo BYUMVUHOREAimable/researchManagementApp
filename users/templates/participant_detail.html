@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <title>Participant Detail</title>
+</head>
+<body class="bg-gray-100 p-6">
+    <div class="container mx-auto">
+        <h1 class="text-3xl font-bold mb-4">Participant Detail</h1>
+        <p><strong>User:</strong> {{ participant.user }}</p>
+        <p><strong>Status:</strong> {{ participant.status }}</p>
+        <p><strong>Project:</strong> {{ participant.project }}</p>
+        <a href="{% url 'participant_list' participant.project.id %}" class="bg-blue-500 text-white px-4 py-2 rounded">Back to List</a>
+    </div>
+</body>
+</html>
