@@ -6,6 +6,12 @@ from .forms import DataCollectionForm  # Assume you've created a form for DataCo
 from django.db.models import Count, Avg, Sum
 from django.utils.timezone import now
 from django.db.models.functions import TruncDate
+from rest_framework import serializers
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from data.models import DataCollection
+from project.models import ResearchProject
+
 
 
 # List all DataCollections for a specific project
@@ -126,3 +132,40 @@ def dashboard_view(request, project_id):
     }
     print(context)
     return render(request, "dashboard.html", context)
+
+
+# Serializers
+class ResearchProjectSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ResearchProject
+        fields = ['id', 'title', 'description', 'start_date', 'end_date', 'created_by']
+
+class DataCollectionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = DataCollection
+        fields = ['id', 'participant', 'project', 'data_submission_date', 'data']
+
+# API Views
+@api_view(['GET'])
+def get_research_projects(request):
+    projects = ResearchProject.objects.all()
+    serializer = ResearchProjectSerializer(projects, many=True)
+    return Response(serializer.data)
+
+@api_view(['GET'])
+def get_project_with_data(request, project_id):
+    try:
+        # Get project details
+        project = ResearchProject.objects.get(id=project_id)
+        project_data = ResearchProjectSerializer(project).data
+        
+        # Get related data collections
+        data_collections = DataCollection.objects.filter(project=project)
+        data_collections_data = DataCollectionSerializer(data_collections, many=True).data
+        
+        return Response({
+            'project': project_data,
+            'data_collections': data_collections_data
+        })
+    except ResearchProject.DoesNotExist:
+        return Response({'error': 'Project not found'}, status=404)

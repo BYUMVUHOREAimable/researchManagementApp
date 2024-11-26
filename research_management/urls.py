@@ -23,10 +23,11 @@ from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path("signup/", user_views.signup, name="signup"),
-    path("login/", user_views.login, name="login"),
+    path("signup/", include("users.urls")),
+    path("login/", auth_views.LoginView.as_view(), name="login"),
     path("logout/", auth_views.LogoutView.as_view(), name="logout"),
-    path("projects/", include("project.urls"))
+    path("projects/", include("project.urls")),
+    path('api/', include('api.urls')),
 ]
 
 if settings.DEBUG:
